@@ -1,0 +1,53 @@
+<!--Header-->
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <!--Title-->
+    <ion-title>
+      {{title}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!--Content-->
+<ion-content padding>
+<!--Display message when there are no items in list-->
+<h3 class="no-item" *ngIf="loadItems().length === 0">
+  No items available in the list!
+</h3>
+
+  <!--Ionic List Component-->
+  <ion-list *ngIf="loadItems().length > 0">
+    <!--Populates list from items array-->
+    <ion-item-sliding *ngFor="let item of loadItems(); let i = index">
+      <ion-item>
+        <ion-text>
+            <h2>{{item.name}}</h2>
+            <p>{{item.quantity}}</p>
+        </ion-text>
+      </ion-item>
+      <ion-item-options>
+        <!--Button to edit item-->
+        <ion-button (click)="editItem(item, i)" color="primary">
+            <ion-icon name="create"></ion-icon>
+            Edit
+        </ion-button>
+        <!--Button to share item-->
+        <ion-button (click)="shareItem(item, i)" color="light">
+            <ion-icon name="share"></ion-icon>
+            Share
+        </ion-button>
+        <!--Button to remove item-->
+        <ion-button (click)="removeItem(item, i)" color="success">
+            <ion-icon name="trash"></ion-icon>
+            Done
+        </ion-button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <!--Button to add items to list-->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <!--Button click function to add item-->
+      <ion-fab-button (click)="addItem()" ><ion-icon name="add"></ion-icon></ion-fab-button>
+  </ion-fab>  
+</ion-content>
