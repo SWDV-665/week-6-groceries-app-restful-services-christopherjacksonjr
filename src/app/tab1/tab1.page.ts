@@ -37,16 +37,6 @@ export class Tab1Page {
 
   /*Function to remove items from list*/ 
   async removeItem(id) {
-    // console.log('Removing ' + item.name + '.');
-    /*Declaring toast then present to screen*/
-    // let toast = await this.toastCtrl.create({
-    //   message: 'Removing ' + item.name + '.',
-    //   duration: 3000,
-    //   position: 'top'
-    // });
-  
-    // toast.present();
-
     /*Removing item from array*/
     this.dataService.removeItem(id);
   }
