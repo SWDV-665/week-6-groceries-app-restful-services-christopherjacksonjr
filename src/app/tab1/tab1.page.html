@@ -11,14 +11,14 @@
 <!--Content-->
 <ion-content padding>
 <!--Display message when there are no items in list-->
-<h3 class="no-item" *ngIf="loadItems().length === 0">
+<h3 class="no-item" *ngIf="items.length === 0">
   No items available in the list!
 </h3>
 
   <!--Ionic List Component-->
-  <ion-list *ngIf="loadItems().length > 0">
+  <ion-list *ngIf="items.length > 0">
     <!--Populates list from items array-->
-    <ion-item-sliding *ngFor="let item of loadItems(); let i = index">
+    <ion-item-sliding *ngFor="let item of items; let i = index">
       <ion-item>
         <ion-text>
             <h2>{{item.name}}</h2>
@@ -37,7 +37,7 @@
             Share
         </ion-button>
         <!--Button to remove item-->
-        <ion-button (click)="removeItem(item, i)" color="success">
+        <ion-button (click)="removeItem(item._id)" color="success">
             <ion-icon name="trash"></ion-icon>
             Done
         </ion-button>

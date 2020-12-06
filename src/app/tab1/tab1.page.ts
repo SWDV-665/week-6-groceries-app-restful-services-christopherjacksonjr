@@ -14,27 +14,41 @@ import { error } from '@angular/compiler/src/util';
 export class Tab1Page {
   title = 'Grocery List';
 
-  constructor(private toastCtrl: ToastController, public alertController: AlertController, public dataService: GroceriesServiceProvider, public inputDialogService: InputDialogServiceProvider, public socialSharing: SocialSharing) {};
+  items = [];
+  errorMessage: string;
+
+  constructor(private toastCtrl: ToastController, public alertController: AlertController, public dataService: GroceriesServiceProvider, public inputDialogService: InputDialogServiceProvider, public socialSharing: SocialSharing) {
+    dataService.dataChanged$.subscribe((dataChanged: boolean) => {
+      this.loadItems();
+    });
+  }
+
+  ionViewWillEnter() {
+    this.loadItems();
+  }
 
   /*Load items array from dataService*/
   loadItems() {
-    return this.dataService.getItems();
+    this.dataService.getItems()
+      .subscribe(
+        items =>  this.items = items,
+        error => this.errorMessage = <any>error);
   }
 
   /*Function to remove items from list*/ 
-  async removeItem(item, index) {
-    console.log('Removing ' + item.name + '.');
+  async removeItem(id) {
+    // console.log('Removing ' + item.name + '.');
     /*Declaring toast then present to screen*/
-    let toast = await this.toastCtrl.create({
-      message: 'Removing ' + item.name + '.',
-      duration: 3000,
-      position: 'top'
-    });
+    // let toast = await this.toastCtrl.create({
+    //   message: 'Removing ' + item.name + '.',
+    //   duration: 3000,
+    //   position: 'top'
+    // });
   
-    toast.present();
+    // toast.present();
 
     /*Removing item from array*/
-    this.dataService.removeItem(index);
+    this.dataService.removeItem(id);
   }
 
   /*Function to share items from list*/ 

@@ -5,7 +5,9 @@ import { GroceriesServiceProvider } from './groceries-service.service';
 @Injectable()
 export class InputDialogServiceProvider {
 
-  constructor(public alertController: AlertController, public dataService: GroceriesServiceProvider) { }
+  constructor(public alertController: AlertController, public dataService: GroceriesServiceProvider) {
+    console.log("InputDialogServiceProvider::constructor");
+  }
 
   /*Pop up dialouge to allow users to edit item information to be updated to list*/
   async showPrompt(item?, index?) {
@@ -33,19 +35,21 @@ export class InputDialogServiceProvider {
           text: 'Cancel',
           role: 'cancel',
           cssClass: 'secondary',
-          handler: () => {
+          handler: data => {
             console.log('Confirm Cancel');
           }
         }, {
           text: 'Save',
-          handler: item => {
-            console.log('Confirm save', item);
+          handler: data => {
+            console.log('Confirm save', data);
             /*Saving item to array with new information*/
             if(index !== undefined) {
+              item.name = data.name;
+              item.quantity = data.quantity;
               this.dataService.editItem(item, index);
             } else {
               /*Adding item to array*/
-              this.dataService.addItem(item);
+              this.dataService.addItem(data);
             }
           }
         }
